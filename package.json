@@ -1,6 +1,6 @@
 {
   "name": "gulp-build",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Build files for different environments by swapping in variables",
   "homepage": "https://github.com/tjeastmond/gulp-build",
   "main": "index.js",

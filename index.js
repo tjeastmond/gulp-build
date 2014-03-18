@@ -21,7 +21,7 @@ module.exports = function(data, config) {
 			});
 		}
 
-		if (_.isString(options.layout) && options.layout.indexOf('{{> body}}') !== -1) {
+		if (_.isString(options.layout) && options.layout.indexOf('{{> body') !== -1) {
 			hbs.registerPartial('body', fileContents);
 			template = hbs.compile(options.layout);
 		} else {
