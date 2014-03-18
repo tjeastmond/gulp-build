@@ -1,12 +1,10 @@
 # gulp-build
 
-**I WOULDN'T SUGGEST USING THIS YET**
+Gulp 3 plugin for building out files for deployment. Good for swapping environmental variables like Google Analytics IDs, or just compiling static HTML files.
 
-Gulp 3 plugin developed to satisfy a deployment requirement or swapping out various variables depending on the environment.
+`gulp-build` uses HandleBars for templates, and supports partials and layouts.
 
-**This script doesn't determine the environment, and currently uses Underscore.js templates, with the Mustache delimiters. A future release will allow template engines to be set.**
-
-**This is an early release.**
+**Version `0.5.0` was a big update. I moved away from using Underscore templates, and have added support for partials and layouts. Both partials and layouts must be passed in as strings, but a future update will bring support for file glob'ing.**
 
 ## Install
 
@@ -15,6 +13,8 @@ npm install --save-dev gulp-build
 ```
 
 ## Usage
+
+Basic usage:
 
 ```javascript
 var build = require('gulp-build');
@@ -26,24 +26,46 @@ gulp.task('build', function() {
 });
 ```
 
+With partials and a layout:
+
+```javascript
+var build = require('gulp-build');
+
+var options = {
+	partials: [{
+		name: 'footer',
+		tpl: '<p>Copyright 2013</p>'
+	}],
+	layout: '<html><body>{{> body}}</body></html>'
+};
+
+gulp.task('build', function() {
+  gulp.src('pages/*.html')
+      .pipe(build({ title: 'Some page' }, options))
+      .pipe(gulp.dest('dist'))
+});
+
+```
+
+If your templates want to render partials, you just reference them as: `{{> partialName}}`.
+
+If you use a layout, you need the `{{> body}}` tag for the plugin to know where to place your content. If you omit it, your compiled file will be missing the main content!
+
+
 ## API
 
 ### gulp-build(data, config)
 
-### filename
-The name of the file to save your new template object to.
+#### data
+Templates vars passed down to `HandleBars` for compiling
 
-#### config.interpolate
-Type: `RegExp`<br />
-Default: `/\{\{(.+?)\}\}/g`
+#### config.layout
+Type: `String`<br />
+Default: null
 
-Which template delimiters to look for:
-
-```html
-This is a {{ template }}.
-```
-
-You can change it to use ERB type delimiters with the RegExp: `/<%=([\s\S]+?)%>/g`
+#### config.partials
+Type: `Array` containing `Objects`<br />
+Default: []
 
 ## Testing
 
