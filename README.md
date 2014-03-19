@@ -67,6 +67,19 @@ Default: null
 Type: `Array` containing `Objects`<br />
 Default: []
 
+A config object with partials would look like:
+
+```javascript
+var options = {
+  partials: [
+    { name: 'footer', tpl: '<p>Copyright 2014</p>' },
+    { name: 'header', tpl: '<h1>The Header!</h1>' }
+  ]
+};
+```
+
+Your template could use those partials by using: `{{> footer}}` or `{{> header}}`
+
 ## Testing
 
 Open a terminal in the directory containing `gulp-build` and then:

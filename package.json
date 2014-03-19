@@ -1,6 +1,6 @@
 {
   "name": "gulp-build",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Build files for different environments by swapping in variables",
   "homepage": "https://github.com/tjeastmond/gulp-build",
   "main": "index.js",
@@ -19,18 +19,21 @@
   "keywords": [
     "underscore",
     "gulpplugin",
-    "build"
+    "build",
+    "handlebars",
+    "partials",
+    "gulp"
   ],
   "license": "MIT",
   "dependencies": {
     "through2": "~0.4.1",
     "underscore": "~1.5.2",
-    "glob": "3.2.9",
     "handlebars": "2.0.0-alpha.2"
   },
   "devDependencies": {
     "gulp": "~3.4.0",
     "gulp-util": "~2.2.14",
+    "glob": "3.2.9",
     "mocha": "~1.15.1",
     "should": "~2.1.1"
   }

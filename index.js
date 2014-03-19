@@ -1,6 +1,5 @@
 var through = require('through2');
 var _ = require('underscore');
-var glob = require('glob');
 var hbs = require('handlebars');
 
 module.exports = function(data, config) {
