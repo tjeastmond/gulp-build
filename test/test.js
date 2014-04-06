@@ -94,4 +94,118 @@ describe('gulp-build', function() {
 
 		stream.write(fakeFile.file);
 	});
+
+	it('should compile with helpers', function (done) {
+		var stream = build({ name: 'Jack' }, {
+			helpers: [
+				{
+					name: 'add',
+					fn: function (a, b) {return a + b;}
+				}
+			]
+		});
+		var fakeFile = getFile(new Buffer('<p>1 + 2 is definitely equal to {{add 1 2}}.</p>'), '<p>1 + 2 is definitely equal to 3.</p>');
+
+		stream.on('data', function(newFile) {
+			should.exist(newFile);
+			should.exist(newFile.path);
+			should.exist(newFile.relative);
+			should.exist(newFile.contents);
+			Buffer.isBuffer(newFile.contents).should.be.true
+			newFile.contents.toString().should.equal(fakeFile.expected);
+			done();
+		});
+
+		stream.write(fakeFile.file);
+	});
+
+	it('should compile with partials that use the provided helpers', function (done) {
+		var stream = build({ name: 'Jack' }, {
+			helpers: [
+				{
+					name: 'add',
+					fn: function (a, b) {return a + b;}
+				}
+			],
+			partials: [
+				{
+					name: 'addition',
+					tpl: '<p>1 + 2 is definitely equal to {{add 1 2}}.</p>'
+				}
+			]
+		});
+		var fakeFile = getFile(new Buffer('<div>Fact: {{> addition}}</div>'), '<div>Fact: <p>1 + 2 is definitely equal to 3.</p></div>');
+
+		stream.on('data', function(newFile) {
+			should.exist(newFile);
+			should.exist(newFile.path);
+			should.exist(newFile.relative);
+			should.exist(newFile.contents);
+			Buffer.isBuffer(newFile.contents).should.be.true
+			newFile.contents.toString().should.equal(fakeFile.expected);
+			done();
+		});
+
+		stream.write(fakeFile.file);
+	});
+
+	it('should compile with a layout that use the provided helpers', function (done) {
+		var stream = build({ name: 'Jack' }, {
+			layout: '<div><p>We know that 1 + 2 is {{add 1 2}}.</p>{{> body}}</div>',
+			helpers: [
+				{
+					name: 'add',
+					fn: function (a, b) {return a + b;}
+				}
+			]
+		});
+		var fakeFile = getFile(new Buffer('<p>But what is 1 - 2?</p>'), '<div><p>We know that 1 + 2 is 3.</p><p>But what is 1 - 2?</p></div>');
+
+		stream.on('data', function(newFile) {
+			should.exist(newFile);
+			should.exist(newFile.path);
+			should.exist(newFile.relative);
+			should.exist(newFile.contents);
+			Buffer.isBuffer(newFile.contents).should.be.true
+			newFile.contents.toString().should.equal(fakeFile.expected);
+			done();
+		});
+
+		stream.write(fakeFile.file);
+	});
+
+	it('should compile with a layout and partials that use the provided helpers', function (done) {
+		var stream = build({ name: 'Jack' }, {
+			layout: '<div><p>We know that 1 + 2 is {{add 1 2}}.</p>{{> body}}</div>',
+			helpers: [
+				{
+					name: 'add',
+					fn: function (a, b) {return a + b;}
+				},
+				{
+					name: 'subtract',
+					fn: function (a, b) {return a - b;}
+				}
+			],
+			partials: [
+				{
+					name: 'subtraction',
+					tpl: '<p>Well, it turns out that 1 - 2 is {{subtract 1 2}}.</p>'
+				}
+			]
+		});
+		var fakeFile = getFile(new Buffer('<p>But what is 1 - 2?</p>{{> subtraction}}'), '<div><p>We know that 1 + 2 is 3.</p><p>But what is 1 - 2?</p><p>Well, it turns out that 1 - 2 is -1.</p></div>');
+
+		stream.on('data', function(newFile) {
+			should.exist(newFile);
+			should.exist(newFile.path);
+			should.exist(newFile.relative);
+			should.exist(newFile.contents);
+			Buffer.isBuffer(newFile.contents).should.be.true
+			newFile.contents.toString().should.equal(fakeFile.expected);
+			done();
+		});
+
+		stream.write(fakeFile.file);
+	});
 });
