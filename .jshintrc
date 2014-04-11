@@ -1,0 +1,16 @@
+{
+	"curly": true,
+	"eqeqeq": true,
+	"expr": true,
+	"freeze": true,
+	"indent": 4,
+	"maxlen": 120,
+	"newcap": true,
+	"noarg": true,
+	"node": true,
+	"nonbsp": true,
+	"quotmark": true,
+	"trailing": true,
+	"undef": true,
+	"unused": true
+}
