@@ -2,7 +2,7 @@
 
 Gulp 3 plugin for building out files for deployment. Good for swapping environmental variables like Google Analytics IDs, or just compiling static HTML files.
 
-`gulp-build` uses HandleBars for templates, and supports partials and layouts.
+`gulp-build` uses HandleBars for templates, and supports helpers, partials, and layouts.
 
 **Version `0.5.0` was a big update. I moved away from using Underscore templates, and have added support for partials and layouts. Both partials and layouts must be passed in as strings, but a future update will bring support for file glob'ing.**
 
@@ -25,6 +25,31 @@ gulp.task('build', function() {
       .pipe(gulp.dest('dist'))
 });
 ```
+
+With helpers:
+
+```javascript
+var build = require('gulp-build');
+
+var options = {
+  helpers: [{
+    name: 'addition',
+    fn: function (a, b) { return a + b; }
+  }]
+};
+
+gulp.task('build', function() {
+  gulp.src('pages/*.html')
+      .pipe(build({ title: 'Some page' }, options))
+      .pipe(gulp.dest('dist'))
+});
+
+```
+
+Helpers are regular Handlebars helpers or block helpers that your layout, partials, and templates can call.
+
+For more information on Handlebars helpers, see http://handlebarsjs.com/#helpers and http://handlebarsjs.com/block_helpers.html.
+
 
 With partials and a layout:
 

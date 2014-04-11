@@ -5,7 +5,8 @@ var hbs = require('handlebars');
 module.exports = function(data, config) {
 	var options = _.extend({
 		layout: null,
-		partials: []
+		partials: [],
+		helpers: []
 	}, config);
 
 	data = data || {};
@@ -13,6 +14,12 @@ module.exports = function(data, config) {
 	var build = function(file, encoding, callback) {
 		var fileContents = file.contents.toString();
 		var template = '';
+
+		if (options.helpers.length > 0) {
+			_.each(options.helpers, function(helper) {
+				hbs.registerHelper(helper.name, helper.fn);
+			});
+		}
 
 		if (options.partials.length > 0) {
 			_.each(options.partials, function(partial) {
