@@ -34,7 +34,7 @@ var build = require('gulp-build');
 var options = {
   helpers: [{
     name: 'addition',
-    fn: function (a, b) { return a + b; }
+    fn: function(a, b) { return a + b; }
   }]
 };
 
@@ -49,7 +49,6 @@ gulp.task('build', function() {
 Helpers are regular Handlebars helpers or block helpers that your layout, partials, and templates can call.
 
 For more information on Handlebars helpers, see http://handlebarsjs.com/#helpers and http://handlebarsjs.com/block_helpers.html.
-
 
 With partials and a layout:
 
@@ -75,7 +74,6 @@ gulp.task('build', function() {
 If your templates want to render partials, you just reference them as: `{{> partialName}}`.
 
 If you use a layout, you need the `{{> body}}` tag for the plugin to know where to place your content. If you omit it, your compiled file will be missing the main content!
-
 
 ## API
 
@@ -105,13 +103,34 @@ var options = {
 
 Your template could use those partials by using: `{{> footer}}` or `{{> header}}`
 
+## Contributing
+
+I'd like to see other template frameworks get integrated. Frameworks like: `ejs`, `Hogan` and `Mustache` but I might not have time to get to these soon.
+
+If you'd like to help out, just submit a pull request. Before submitting though, be sure to:
+
+* Update the README
+* Write new tests
+* Ensure previous tests don't break
+* Ensure `jshint` doesn't fail
+* Follow code layout/style
+
+You can run tests and `jshint` with:
+
+```shell
+gulp lint
+gulp test
+```
+
+The default `gulp` task will run both of those.
+
 ## Testing
 
 Open a terminal in the directory containing `gulp-build` and then:
 
 ```shell
 npm install
-npm test
+gulp
 ```
 
 ## The License (MIT)
