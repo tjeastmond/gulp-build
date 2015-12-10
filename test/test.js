@@ -225,4 +225,28 @@ describe('gulp-build', function() {
 
 		stream.write(fakeFile.file);
 	});
+
+	it('should available handlebars instance', function(done) {
+		var stream = build();
+		var fakeFile = getFile(
+			new Buffer('{{custom}}'),
+			'yes!'
+		);
+
+		build.hbs.registerHelper('custom', function() {
+			return 'yes!';
+		});
+
+		stream.on('data', function(newFile) {
+			should.exist(newFile);
+			should.exist(newFile.path);
+			should.exist(newFile.relative);
+			should.exist(newFile.contents);
+			Buffer.isBuffer(newFile.contents).should.be.true;
+			newFile.contents.toString().should.equal(fakeFile.expected);
+			done();
+		});
+
+		stream.write(fakeFile.file);
+	});
 });

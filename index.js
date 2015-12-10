@@ -41,3 +41,5 @@ module.exports = function(data, config) {
 
 	return through.obj(build);
 };
+
+module.exports.hbs = hbs;
