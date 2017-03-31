@@ -103,6 +103,10 @@ var options = {
 
 Your template could use those partials by using: `{{> footer}}` or `{{> header}}`
 
+### gulp-build.hbs
+
+Access to handlebars instance to extend its own functional.
+
 ## Contributing
 
 I'd like to see other template frameworks get integrated. Frameworks like: `ejs`, `Hogan` and `Mustache` but I might not have time to get to these soon.
